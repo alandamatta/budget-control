@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+    <form class="box" style="background-color: rgba(200,40,56,0.05)" th:fragment="content">
+        <h2 class="title">Expense</h2>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label for="expenseName" class="label">Name</label>
+                    <div class="control">
+                        <input type="text" class="input" id="expenseName" name="name">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-half">
+                <div class="field">
+                    <label for="expenseType" class="label">Type</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="type" id="expenseType">
+                                <option th:each="expenseType : ${expenseTypes}"
+                                        th:value="${expenseType.getId()}"
+                                        th:text="${expenseType.getTypeName()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-half">
+                <div class="field">
+                    <label for="expenseBudget" class="label">Budget</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="budget" id="expenseBudget">
+                                <option th:each="budgetOption : ${budgetOptions}"
+                                        th:value="${budgetOption.getId()}"
+                                        th:text="${budgetOption.getName()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-two-thirds">
+                <div class="field">
+                    <label for="expenseDate" class="label">Date</label>
+                    <div class="control">
+                        <input type="date" class="input" id="expenseDate" name="date">
+                    </div>
+                </div>
+            </div>
+            <div class="column is-one-third">
+                <div class="field">
+                    <label for="expenseValue" class="label">Value</label>
+                    <div class="control">
+                        <input type="text" class="input" id="expenseValue" name="value">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <button class="button is-danger is-outlined is-fullwidth">Add It</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+    <div class="box" th:fragment="content">
+        <div class="columns">
+            <div class="column is-3">
+                <h3 class="title">Budgets</h3>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field has-addons">
+                    <div class="control">
+                        <button class="button is-small">
+                            Weekly
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-small">
+                            Monthly
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="budget-list" >
+            <table class="table">
+                <tbody>
+                    <tr th:each="budget : ${budgets}">
+                        <td>
+                            <p th:text="${budget.getBudgetName()}"></p>
+                        </td>
+                        <td align="right">
+                            <span id="total" th:text="${budget.getTotalExpenses()}"></span>
+                        </td>
+                        <td style="width: 8em" class="is-vcentered">
+                            <progress id="budget1" class="progress is-success is-small"
+                                      th:value="${budget.getTotalExpenses()}"
+                                      th:max="${budget.getLimitValue()}"></progress>
+                        </td>
+                        <td align="left">
+                            <span id="limit" th:text="${budget.getLimitValue()}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
