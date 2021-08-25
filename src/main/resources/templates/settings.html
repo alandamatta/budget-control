@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Settings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <div class="container" style="padding: 2em 0 0 0">
+        <div class="tabs is-centered">
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li class="is-active"><a>Settings</a></li>
+            </ul>
+        </div>
+
+
+        <div class="columns">
+            <div class="column is-one-third">
+                <form class="box" id="budget-form" action="/budget" method="post" onsubmit="return validateBudget()">
+                    <p class="title">Budget</p>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label for="name" class="label">Name</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="name" id="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-half">
+                            <div class="field">
+                                <label for="limitValue" class="label">Amount</label>
+                                <div class="control">
+                                    <input type="text" class="input" id="limitValue" name="limitValue">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <button class="button is-success is-fullwidth" type="submit">Create Budget</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="column is-one-third">
+                <form class="box" id="expenseType-form" action="/expenseType" method="post" onsubmit="return validateExpenseType()">
+                    <p class="title">Expense Type</p>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label for="typeName" class="label">Name</label>
+                                <div class="control">
+                                    <input type="text" class="input" id="typeName" name="typeName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <button class="button is-fullwidth is-success" type="submit">Create Expense Type</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function validateBudget() {
+            const form = $('#budget-form');
+            const name = form.find('#name').val();
+            const amount = form.find('#limitValue').val();
+            let valid = true;
+            let message = '';
+            if (!name || name.length < 1 || name.length > 60) {
+                message += '\n Name is invalid!';
+                valid = false;
+            }
+            if (!amount || isNaN(amount) || amount <= 0 || amount > 100000000) {
+                message += '\n Amount is invalid!';
+                valid = false;
+            }
+            if (!valid) {
+                alert(message);
+            }
+            return valid;
+        }
+        function validateExpenseType() {
+            const form = $('#expenseType-form');
+            const typeName = form.find('#typeName').val();
+            let valid = true;
+            let message = '';
+            if (!typeName || typeName.length < 1 || typeName.length > 60) {
+                message += '\n Name is invalid!';
+                valid = false;
+            }
+            if (!valid) {
+                alert(message);
+            }
+            return valid;
+        }
+    </script>
+</body>
+</html>

@@ -6,10 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
+    <script src="https://kit.fontawesome.com/1fe4c8b08c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
     <div class="container" style="padding: 2em 0 0 0">
+        <div class="tabs is-centered">
+            <ul>
+                <li class="is-active"><a>Dashboard</a></li>
+                <li><a href="/settings">Settings</a></li>
+            </ul>
+        </div>
         <div class="columns">
             <div class="column">
                 <div th:replace="fragments/budgetInfo :: content"></div>
@@ -24,5 +31,49 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js" integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        document.addEventListener('ready', function() {
+
+        });
+
+        function validateExpense() {
+            const form = $('#expense-form');
+            const name = form.find('#expenseName').val();
+            const date = form.find('#expenseDate').val();
+            const expenseValue = form.find('#expenseValue').val();
+            let rst = true;
+            let msg = '';
+            if (!name || name.length > 60) {
+                msg += '\nName is invalid!';
+                rst = false;
+            }
+            if (!date || date.length > 10) {
+                msg += '\nDate is invalid!';
+                rst = false;
+            }
+            if (!expenseValue || isNaN(expenseValue) || expenseValue <= 0 || expenseValue > 10000000) {
+                msg += '\nAmount is invalid!';
+                rst = false;
+            }
+            if (!rst) {
+                alert(msg);
+            }
+            return rst;
+        }
+        function deleteExpense(id) {
+            const confirmation = confirm('You are about to delete something. Are you sure?');
+            if (confirmation) {
+                $('#'+id).submit();
+            }
+        }
+        function deleteBudget(formId) {
+            const confirmation = confirm('You are about to delete something. Are you sure?');
+            if (confirmation) {
+                $('#'+formId).submit();
+            }
+        }
+    </script>
 </body>
 </html>

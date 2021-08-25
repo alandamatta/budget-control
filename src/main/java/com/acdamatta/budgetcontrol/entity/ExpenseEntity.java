@@ -1,8 +1,8 @@
 package com.acdamatta.budgetcontrol.entity;
 
-import com.acdamatta.budgetcontrol.converter.MoneyConverter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.javamoney.moneta.Money;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,8 +15,7 @@ public class ExpenseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Convert(converter = MoneyConverter.class)
-    private Money value;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "expense_type_id")
@@ -29,6 +28,8 @@ public class ExpenseEntity {
     @Column(length = 60)
     private String name;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     @ManyToOne

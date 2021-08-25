@@ -28,10 +28,10 @@
                 <tbody>
                     <tr th:each="budget : ${budgets}">
                         <td>
-                            <p th:text="${budget.getBudgetName()}"></p>
+                            <p th:text="${budget.getName()}"></p>
                         </td>
                         <td align="right">
-                            <span id="total" th:text="${budget.getTotalExpenses()}"></span>
+                            <span id="total" th:text="${budget.getTotalExpensesText()}"></span>
                         </td>
                         <td style="width: 8em" class="is-vcentered">
                             <progress id="budget1" class="progress is-success is-small"
@@ -39,7 +39,17 @@
                                       th:max="${budget.getLimitValue()}"></progress>
                         </td>
                         <td align="left">
-                            <span id="limit" th:text="${budget.getLimitValue()}"></span>
+                            <span id="limit" th:text="${budget.getLimitValueText()}"></span>
+                        </td>
+                        <td>
+                            <form action="/dashboard/budget/delete" th:id="'expenseType-delete-form-'+${budget.getId()}" method="post">
+                                <input type="hidden" th:value="${budget.getId()}" name="budgetId">
+                            </form>
+                            <a style="color: rgba(200,40,56,0.2)" th:onclick="'deleteBudget(\'expenseType-delete-form-'+${budget.getId()}+'\')'">
+                                <span class="icon">
+                                    <i class="fas fa-minus-circle is-warning" ></i>
+                                </span>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

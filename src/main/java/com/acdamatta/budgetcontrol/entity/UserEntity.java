@@ -1,5 +1,6 @@
 package com.acdamatta.budgetcontrol.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -16,10 +17,13 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonIgnore
     private String username;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private String email;
 
 }

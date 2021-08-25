@@ -1,8 +1,6 @@
 package com.acdamatta.budgetcontrol.entity;
 
-import com.acdamatta.budgetcontrol.converter.MoneyConverter;
 import lombok.Data;
-import org.javamoney.moneta.Money;
 
 import javax.persistence.*;
 
@@ -17,8 +15,7 @@ public class BudgetEntity {
     private String name;
 
     @Column(name = "limit_value")
-    @Convert(converter = MoneyConverter.class)
-    private Money limitValue;
+    private double limitValue;
 
     @ManyToOne
     @JoinColumn(name = "data_owner_id")

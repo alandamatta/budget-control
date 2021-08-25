@@ -1,18 +1,14 @@
 package com.acdamatta.budgetcontrol.controller;
 
-import com.acdamatta.budgetcontrol.dto.ExpenseDTO;
 import com.acdamatta.budgetcontrol.entity.ExpenseEntity;
 import com.acdamatta.budgetcontrol.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/expense")
@@ -25,17 +21,27 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
+    @PostMapping("/api")
+    public ResponseEntity<ExpenseEntity> create(@RequestBody ExpenseEntity expense) {
+        expense = expenseService.create(expense);
+        return ResponseEntity.ok(expense);
+    }
+
+    @PostMapping("/delete")
+    public String delete(Long expenseId) {
+        expenseService.deleteById(expenseId);
+        return "redirect:/dashboard";
+    }
+
     @PostMapping
-    public ResponseEntity<ExpenseDTO> create(@RequestBody ExpenseDTO expenseDTO) {
-        final ExpenseEntity expense = expenseService.fromDTO(expenseDTO);
-        expenseDTO = expenseService.toDTO(expenseService.create(expense));
-        return ResponseEntity.ok(expenseDTO);
+    public String create2(ExpenseEntity expense) {
+        expenseService.create(expense);
+        return "redirect:/dashboard";
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseDTO>> get() {
+    public ResponseEntity<List<ExpenseEntity>> get() {
         final List<ExpenseEntity> expenses = expenseService.findAll();
-        final List<ExpenseDTO> expensesDTO = expenses.stream().map(expenseService::toDTO).collect(Collectors.toList());
-        return ResponseEntity.ok(expensesDTO);
+        return ResponseEntity.ok(expenses);
     }
 }

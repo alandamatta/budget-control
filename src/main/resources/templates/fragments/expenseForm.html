@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
-    <form class="box" style="background-color: rgba(200,40,56,0.05)" th:fragment="content">
+    <form class="box" id="expense-form" onsubmit="return validateExpense()" action="/expense" method="post" style="background-color: rgba(200,40,56,0.05)" th:fragment="content">
         <h2 class="title">Expense</h2>
         <div class="columns">
             <div class="column">
@@ -18,8 +18,8 @@
                 <div class="field">
                     <label for="expenseType" class="label">Type</label>
                     <div class="control">
-                        <div class="select">
-                            <select name="type" id="expenseType">
+                        <div class="select is-fullwidth">
+                            <select name="expenseType" id="expenseType">
                                 <option th:each="expenseType : ${expenseTypes}"
                                         th:value="${expenseType.getId()}"
                                         th:text="${expenseType.getTypeName()}">
@@ -56,16 +56,16 @@
             </div>
             <div class="column is-one-third">
                 <div class="field">
-                    <label for="expenseValue" class="label">Value</label>
+                    <label for="expenseValue" class="label">Amount</label>
                     <div class="control">
-                        <input type="text" class="input" id="expenseValue" name="value">
+                        <input type="text" class="input" id="expenseValue" name="amount">
                     </div>
                 </div>
             </div>
         </div>
         <div class="columns">
             <div class="column">
-                <button class="button is-danger is-outlined is-fullwidth">Add It</button>
+                <button type="submit" class="button is-danger is-outlined is-fullwidth">Add It</button>
             </div>
         </div>
     </form>

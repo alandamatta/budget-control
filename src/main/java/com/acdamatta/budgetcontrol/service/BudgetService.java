@@ -1,11 +1,8 @@
 package com.acdamatta.budgetcontrol.service;
 
-import com.acdamatta.budgetcontrol.dto.BudgetDTO;
 import com.acdamatta.budgetcontrol.entity.BudgetEntity;
-import com.acdamatta.budgetcontrol.entity.ExpenseTypeEntity;
 import com.acdamatta.budgetcontrol.repository.BudgetRepository;
-import com.acdamatta.budgetcontrol.repository.BudgetViewRepository;
-import com.acdamatta.budgetcontrol.view.BudgetInfoView;
+import com.acdamatta.budgetcontrol.projection.BudgetInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +15,9 @@ public class BudgetService {
 
     private final BudgetRepository budgetRepository;
 
-    private final ExpenseTypeService expenseTypeService;
-
-    private final MoneyService moneyService;
-
-    private final BudgetViewRepository budgetViewRepository;
-
     @Autowired
-    public BudgetService(BudgetRepository budgetRepository,
-                         ExpenseTypeService expenseTypeService,
-                         MoneyService moneyService,
-                         BudgetViewRepository budgetViewRepository) {
+    public BudgetService(BudgetRepository budgetRepository) {
         this.budgetRepository = budgetRepository;
-        this.expenseTypeService = expenseTypeService;
-        this.moneyService = moneyService;
-        this.budgetViewRepository = budgetViewRepository;
     }
 
     public BudgetEntity create(BudgetEntity budgetEntity) {
@@ -50,20 +35,12 @@ public class BudgetService {
         return budgetEntityList;
     }
 
-    public List<BudgetInfoView> findAllBudgetInfo() {
+    public List<BudgetInfo> findAllBudgetInfo() {
         return budgetRepository.getAllBudgetsInfo();
     }
 
-    public BudgetDTO toDTO(BudgetEntity budget) {
-        BudgetDTO budgetDTO = BudgetDTO.newInstance();
-        return budgetDTO.fromEntity(budget);
+    public void deleteById(long budgetId) {
+        final Optional<BudgetEntity> budget = findById(budgetId);
+        budgetRepository.delete(budget.orElseThrow());
     }
-
-    public BudgetEntity fromDTO(BudgetDTO budgetDTO) {
-        BudgetEntity budget = new BudgetEntity();
-        budget.setName(budgetDTO.getName());
-        budget.setLimitValue(moneyService.toMoney(budgetDTO.getLimitValue()));
-        return budget;
-    }
-
 }

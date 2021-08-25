@@ -30,6 +30,10 @@ public class ExpenseTypeService {
         return expenseTypes;
     }
 
+    public void deleteById(long id) {
+        expenseTypeRepository.deleteById(id);
+    }
+
     public Optional<ExpenseTypeEntity> findById(long id) {
         return expenseTypeRepository.findById(id);
     }

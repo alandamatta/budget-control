@@ -14,14 +14,25 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>$</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="expense : ${expenses}">
-                <td>--/--/--</td>
-                <td th:text="${expense.getName()}"></td>
-                <td th:text="${expense.getExpenseType().getTypeName()}"></td>
-                <td th:text="${expense.getValue().toString()}"></td>
+                <td th:text="${expense.getDate()}"></td>
+                <td th:text="${expense.getExpenseName()}"></td>
+                <td th:text="${expense.getExpenseTypeName()}"></td>
+                <td th:text="${expense.getAmount()}"></td>
+                <td>
+                    <form action="/expense/delete/" th:id="'expense-row-'+${expense.getId()}" method="post" class="expense-row">
+                        <input type="hidden" th:value="${expense.getId()}" name="expenseId">
+                        <a style="color: rgba(200,40,56,0.2)" th:onclick="'deleteExpense(\'expense-row-'+${expense.getId()}+'\')'">
+                            <span class="icon">
+                                <i class="fas fa-minus-circle is-warning" ></i>
+                            </span>
+                        </a>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
